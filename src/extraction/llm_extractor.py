@@ -53,4 +53,4 @@ class LLMExtractor:
         # read the result, and then output the CitationMetadata.
         result = agent.run_sync(f"Document text:\n{truncated_text}")
         
-        return result.data
+        return result.output
