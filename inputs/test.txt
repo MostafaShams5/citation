@@ -1,0 +1,230 @@
+
+Does the House Really Always Win? What AI Found in the Chaos: A Study of Order and Randomness
+
+
+Abstract
+
+This study investigates the enduring question of whether a predictive "edge" can be found in gambling markets by deploying artificial intelligence as an analytical tool across two distinct environments. The first, a provably random online ‘crash’ game, served as a control to test the AI’s ability to discern true randomness. The second, a real-world dataset of two decades of English Premier League match odds, provided a complex system to search for exploitable patterns. The AI models successfully identified the absence of patterns in the random environment, confirming their calibration. When applied to the sports betting market, the models failed to generate a net profit, yet they consistently and significantly outperformed all tested human-heuristic strategies by mastering the art of capital preservation. A feature importance analysis revealed the AI did not learn to predict the sport, but rather to interpret the market itself, using the bookmaker's odds as the primary predictive feature. The findings provide a robust demonstration of the profound informational efficiency of bookmaker odds—a necessary condition for the semi-strong form of the Efficient Market Hypothesis—and conclude that the house's advantage is a structural property of an efficient market that even a sophisticated AI cannot overcome.
+10.6339/25-JDS1211
+
+Introduction: The Unsolvable Puzzle?
+
+For as long as there have been games of chance, there has been a hunt for the system. A hidden pattern, a secret rhythm, a "ghost in the machine" that, if found, could turn luck into a science. This pursuit is more than a pastime; it’s a global industry valued at over USD 78.66 billion in 2024, built on the tantalizing promise that the house can be beaten.1 But what if the ghost we are chasing is just a reflection in the glass? What if our very nature—our deep-seated, evolved need to find patterns and exert control—is the real trap? And what would it take to prove it?
+This is the story of an investigation into that very question. To find an answer, we deployed a powerful artificial intelligence, not as a gambler, but as a detective. Our method was to examine two starkly different environments, two worlds that would allow us to isolate the very nature of an "edge."
+First, we entered The Algorithmic Void: a provably random online ‘crash’ game, data for which was gathered through more than 16 hours of live web scraping.3 This is our scientific control group, a world of pure, verifiable mathematical chaos. Before we could trust our AI to find a real pattern in a complex system, we had to be absolutely certain it wouldn't be fooled by a fake one in a simple system. This is where we would calibrate our instruments against the unforgiving logic of pure chance.
+Second, we stepped into The Human Colosseum: a dataset of 7,404 matches from two decades of English Premier League history (seasons 2000-01 to 2020-21), the most bet-upon football league on Earth. This is our real-world test, a messy, unpredictable arena driven by skill, passion, and a million hidden variables. If a genuine, exploitable advantage exists anywhere, it should be here.
+By holding the findings from these two worlds against each other, a single, profound truth begins to emerge. This is an investigation not just into betting, but into the very nature of prediction, the psychology of hope, and what happens when a machine is tasked with solving a puzzle that may have been designed never to be solved. All code, datasets, and figures used in this analysis are publicly available for review and replication on the project's GitHub repository:.
+
+Theoretical Framework: The Market's Mind
+
+To understand the challenge of finding a profitable "edge," we must consider the established theories that govern markets and human decision-making. The Efficient Market Hypothesis (EMH), first articulated by Eugene Fama, posits that asset prices—in this case, betting odds—already reflect all publicly available information, making it impossible to consistently outperform the market. This study directly tests the informational efficiency of the odds themselves by using them as the sole predictive features for an AI.
+However, markets are not perfectly rational, largely due to human psychology. The most documented anomaly is the favorite-longshot bias, where bettors tend to overvalue longshots and undervalue favorites.4 This leads to the paradox where betting on favorites yields more wins but worse financial returns, a finding this study confirms.
+This behavior can be explained by Prospect Theory, developed by Daniel Kahneman and Amos Tversky, which shows that humans make decisions based on potential gains and losses relative to a reference point, not absolute outcomes. Crucially, it identifies loss aversion: the pain of a loss is felt about twice as powerfully as the pleasure of an equivalent gain.5 This explains why bettors might chase losses and why the AI's strategy of slow, managed capital decay feels psychologically superior to more volatile approaches.
+Finally, the Illusion of Control, identified by Ellen Langer, describes our tendency to overestimate our ability to influence events governed by chance. The act of researching teams or building a complex AI fosters this illusion, making us believe we can control an uncontrollable system. This study's outcome serves as an empirical test of this powerful cognitive bias.
+
+Methodology: A Dual-Environment Analytical Framework
+
+This study employed a two-stage methodology to first calibrate and then test the predictive capabilities of AI in gambling markets.
+
+Environment 1: The Algorithmic Void (Crash Game Analysis)
+
+A time series of 2,596 consecutive rounds from an online ‘crash’ game was acquired via live web scraping.3 The randomness of this data was validated using the Augmented Dickey-Fuller (ADF) test, which confirmed the absence of any predictable, time-dependent structure.3 Two neural networks—a Long Short-Term Memory (LSTM) and an Autoencoder—were then deployed to confirm that the AI could not find illusory patterns in this provably random data.3 Finally, a Monte Carlo simulation (2,000 players, 2,500 rounds, $10,000 starting bankroll) tested the performance of standard human betting strategies (fixed, Martingale, anti-Martingale) in this environment.3
+
+Environment 2: The Human Colosseum (Premier League Analysis)
+
+The second stage used a dataset of 7,404 English Premier League matches from the 2000-01 to 2020-21 seasons, sourced from football-data.co.uk via Kaggle. To test the informational efficiency of the odds, the feature space for the AI models was strictly limited to three closing odds from the bookmaker Bet365: Home win (B365H), Draw (B365D), and Away win (B365A).
+First, five heuristic strategies (Bet on Favorite, Underdog, Home, Away, Random) were simulated over 20 runs on shuffled data to establish a baseline.3 Next, three machine learning models were trained as multi-class classifiers to predict match outcomes using only the odds features. The chosen models and their key parameters were:
+●	XGBoost: objective='multi:softmax', num_class=3, eval_metric='mlogloss' 3
+●	LightGBM: objective='multiclass', num_class=3, metric='multi_logloss' 3
+●	Random Forest: n_estimators=100, criterion='gini' 3
+The financial performance of these AI strategies was benchmarked against the heuristics using the same 20-run simulation methodology.3 Finally, a large-scale parametric Monte Carlo simulation was conducted for the best-performing heuristic and AI strategies to generate robust risk-return profiles. This simulation used a population of 20,000 entities, each with a starting bankroll of $1,000, placing 500 bets at a fixed $10 stake.3
+
+Part I: Into the Void — A Lesson in Perfect Randomness
+
+The opening question is simple: Before we hunt for patterns in the real world, can our AI recognize a world with no patterns at all? To answer this, we must first enter the laboratory of pure chance: the online ‘crash’ game. The rules are brutally simple. A multiplier starts at 1.00x and climbs. It can ‘crash’ at any random moment. Your job is to cash out before it does. It’s a game of nerve against a random number generator. But is it truly random?
+
+The Anatomy of the Trap
+
+An analysis of 2,596 game rounds shows a system that is very skilled at playing with human psychology.3 The first clue is in the difference between the average (mean) crash of 4.13x and the usual (median) crash of only 1.93x.3 This difference reveals a kind of trick with numbers: the game advertises the dream of big wins (the few rare rounds that raise the mean) while most players actually get much smaller results (the median).
+This trick becomes clearer when we look at two other statistics. The skewness, which is 2.91, tells us that most results are small, but a few very large ones stretch the numbers to the right.3 This means those huge wins happen rarely, but they make the average look much higher than what players usually experience. The kurtosis, which is 8.46, means that extreme results—very high or very low—happen more often than in a normal, balanced situation.3 These big jumps create extra excitement and keep players hoping for a jackpot. Together, these patterns form a “statistical illusion”: the game looks rewarding on paper, but in reality, most people face many small losses while chasing a few unlikely big wins.
+Insert Crash_distribution_audience_friendly.png here
+Figure Explained: This chart visualizes the game's psychological engine. The vast majority of the 2,596 game rounds are clustered on the far left, with crash multipliers below 3.00x. The blue dashed line shows the median (1.93x), representing the typical outcome. The red dashed line shows the mean (4.13x), which is pulled far to the right by the long, flat tail of rare but extremely high-payout events. This visual gap between the median and the mean is the core of the trap: selling the possibility of the mean while delivering the reality of the median.
+The trap is set from the very beginning. There is a 4.04% chance of an "instant bust," where the game crashes at 1.00x, wiping out all bets before anyone can even react.3 For those who survive, the house maintains a relentless pressure, with an embedded house edge of 3-7% for most common cash-out targets.3
+Insert crash_survival_audience_friendly.png here
+Figure Explained: This is a survival curve, showing the brutal probability of success. The vertical axis represents the chance of the game not crashing before the multiplier on the horizontal axis is reached. The odds drop off precipitously. There is only a 48.2% chance of reaching a modest 2.00x multiplier, a 13.1% chance of reaching 7.50x, and a mere 4.9% chance of hitting 20.00x. This graph is a stark, quantitative illustration of the house's built-in advantage.
+
+The Statistical Proof: Is Anyone Steering the Ship?
+
+The game feels random, but feelings aren't proof. To be certain, we conducted a formal statistical test known as the Augmented Dickey-Fuller (ADF) test. Think of this as a DNA test for a time series — it checks whether the data has a hidden pattern or if each outcome stands alone, unaffected by the past.
+The result was a p-value of $1.067 \times 10^{-29}$ — an incredibly small number, far below any normal threshold for doubt.3 Such a tiny p-value gives overwhelming evidence that the sequence does not have any trend or predictable structure. In other words, the game’s outcomes are statistically proven to be random.
+[Insert Image: Autocorrelation (ACF) and Partial Autocorrelation (PACF).png]
+Figure Explained: These two plots provide visual confirmation of the ADF test's conclusion. They search for correlations between a game's outcome and the outcomes of previous games (the "lags"). Outside of the trivial first point (which is always 1.0), all other data points fall within the light blue shaded area, indicating they have no statistical significance. This is the visual signature of a flatline — meaning the system shows no meaningful connection between past and future rounds.
+
+The Machine vs. The Void: Can AI See Ghosts?
+
+Now for the critical test. We know there are no patterns. But is our AI smart enough to know that? We unleashed two powerful neural networks to find out.
+A Long Short-Term Memory (LSTM) network, designed specifically to find patterns in sequences, was trained on the game's history. At first, it seemed to work, producing predictions with roughly half the error of a simple model.3 But it was an illusion.
+[Insert Image: lstm_loss_original.png]
+Image Explained: This chart is a classic picture of overfitting. The blue line (Training Loss) shows the AI getting better and better at predicting the data it has already seen. However, the orange line (Validation Loss), which measures its performance on new, unseen data, remains flat and high. The growing gap between these two lines proves the AI has not learned a real pattern; it has simply memorized the random noise in the training data, making it useless for actual prediction.
+An Autoencoder, a network that learns by compressing and then reconstructing data, was deployed next. The logic is simple: if a real pattern exists, the data should be more compressible than random noise. The result was damning.
+[Insert Image:autoencoder_errors_original.png]
+Image 6 Explained: This chart compares the AI's ability to reconstruct real, chronological game data (blue curve) versus randomly shuffled data (orange curve). The dashed lines show the average error for each. Counterintuitively, the average error for the real data (0.0808) is slightly higher than for the random data (0.0773).3 This is definitive proof that there is no discernible temporal structure for the AI to exploit. It is, in essence, "Garbage In, Garbage Out."
+
+The Human Element: The Certainty of Ruin
+
+If an AI can't outsmart the game, what about classic human betting strategies? We ran a Monte Carlo simulation of 2,000 players to test the most famous system of all: the Martingale, where a player doubles their bet after every loss. The results were a catastrophe.
+[Insert Image:gambler_simulation_original.png]
+Image 9 Explained: This plot visualizes the fate of different betting strategies. The solid lines represent the median (typical) outcome, while the shaded areas show the range for the middle 50% of players.
+Fixed (Blue): A slow, predictable decline.
+Martingale (Red): The median player stays near the starting balance for a while, creating an illusion of stability. However, the wide shaded area and the eventual downward plunge of the median show the strategy's extreme volatility and eventual failure. The 29.3% risk of ruin is hidden in this volatility.3
+Anti-Martingale (Teal): An immediate and catastrophic path to ruin for the vast majority of players, with a 76.55% bankruptcy rate.3
+
+Part II: The Human Colosseum — Unmasking the Numbers Behind the Premier League
+
+The question now becomes: If the void is unbeatable, what about a world driven by skill, strategy, and human drama? Can we find an edge here? Having calibrated our tools in the lab, we now enter the messy, information-rich world of the English Premier League. We begin by testing five simple, intuitive betting strategies to set a performance benchmark.
+
+The Paradox: Why Winning More Can Mean Losing Faster
+
+The first look at the results is sobering.
+[Insert Image:fig_famous_strategies_performance.png]
+Image 1 Explained: This chart shows the average bankroll trajectory for five simple betting strategies over thousands of bets across the full dataset. The solid lines represent the average outcome across 20 simulations, while the faint shaded areas show the range of outcomes (variance). Every single strategy trends towards zero, confirming a negative long-term expectation. The "Bet on Home Team" strategy (magenta line) demonstrates the slowest rate of decay.
+Hidden within this universal failure is a critical paradox. The "Bet on Favorite" strategy has the highest win rate by far at 53.9%, which means the player wins more than half the time and therefore feels successful.3 Yet it is one of the worst financial performers, with a dismal Return on Investment (ROI) of -4.15%.3 It also has the worst risk-adjusted performance, indicated by its Sharpe Ratio of -2.76.3 This is a classic demonstration of the "favorite–longshot bias," proving that winning bets is not the same as making money.
+
+The High Water Mark: Visualizing a Losing Proposition
+
+To truly understand the mountain our AI needs to climb, we subjected the best heuristic, "Bet on Home Team," to a massive Monte Carlo simulation: 20,000 virtual players, each starting with $1,000 and making 500 bets.3
+[Insert Image:monte_carlo_home_team.png]
+Image 3 Explained: This histogram is the graphical signature of the house’s advantage. Each bar represents the number of players (frequency) who finished with a specific final bankroll. The distribution is roughly bell-shaped but centered on the average final bankroll of $808 (solid orange line), which is well below the starting bankroll of $1,000 (dashed red line).3 The “Population Segmentation” box tells the story: a staggering 79.2% of players lost money, and only 20.7% finished with a profit.3
+
+Part III: The Machine Enters the Arena — What Did the AI Actually Learn?
+
+The final question: Can an AI, free from human bias and emotion, finally find the ghost in the machine? We trained three powerful machine learning models—XGBoost, LightGBM, and Random Forest—on two decades of match data and unleashed them on the market.3
+Strategy	Avg Final Bankroll (Simulated, 20 Runs)	Avg Final Bankroll (Monte Carlo, 20k Runs)	Win Rate (%)	ROI (%)	Sharpe Ratio	Risk of Ruin (%)
+AI Models						
+Random Forest	$712.85	$923.65	48.81	-1.54	-0.01	0.0%
+XGBoost	$676.00	$927.50	51.51	-1.42	-0.01	0.0%
+LightGBM	$668.44	$929.81	52.28	-1.46	-0.01	0.0%
+Heuristics						
+Bet on Home Team	$598.12	$807.70	46.44	-1.99	-1.34	0.1%
+Bet on Favorite	$250.58	$793.47	54.09	-4.15	-2.76	0.0%
+Random Bet	$6.00	$424.57	32.30	-11.68	-1.97	9.9%
+Bet on Underdog	$4.00	$479.36	20.40	-10.81	-2.11	17.1%
+Bet on Away Team	$7.00	$230.57	27.80	-16.32	-2.36	33.4%
+
+A New Paradigm: The Art of Winning Losing Slower
+
+The immediate impact is undeniable.
+[Insert Image:fig_ml_strategies_performance.png]
+Image 2 Explained: This chart compares the average performance of the three AI models with the two best-performing heuristics on the same unseen test data. The AI models (blue, green, purple) consistently preserve capital more effectively. Among the heuristics, “Bet on Home Team” ended with an average bankroll of $598, outperforming “Bet on Favorite,” which fell to $251.3 This result for the "Home Team" strategy differs from the long-term expected value seen in the later Monte Carlo simulation because it reflects the average outcome of 20 specific paths through a fixed test dataset, making it subject to the particular sequence of matches in that set. Although all models show a long-term negative trend, the AI models follow smoother, more stable trajectories.
+The AI models haven't found a secret to profitability. They have mastered the art of losing more slowly through superior risk management. However, there's a psychological hook. Every AI strategy experienced a temporary Peak Bankroll well over $1,290.3 A user would experience a thrilling period of being significantly in profit, creating a powerful, memorable confirmation that the system "works."
+
+The AI's Advantage, Quantified
+
+To get a precise comparison, we put the best AI model through the same 20,000-player Monte Carlo simulation as the best heuristic.
+[Insert Image:monte_carlo_random_forest.png]
+Image Explained: Compared to Image 3, the entire distribution has shifted to the right. The average final bankroll is now $924 (solid orange line), significantly closer to the starting $1,000.3 The AI has not found a secret to guaranteed profit; it has found a remarkably efficient way to mitigate loss. The "Population Segmentation" box quantifies this: the percentage of profitable players has nearly doubled to 37.7%, and the Risk of Ruin has been effectively eliminated.3 The Expected Value per $10 bet improves by nearly 60%, from -$0.3820 to -$0.1540.3 It remains negative, but the bleed has slowed to a trickle. The AI's primary function is not profit generation. It is catastrophe aversion.
+
+The Revelation: What's Inside the Black Box?
+
+The AI is undeniably superior. But how? We opened the black box to conduct a feature importance analysis, asking the models what data they found most useful. The models were trained using only three features: the bookmaker's odds for a Home win (B365H), an Away win (B365A), and a Draw (B365D).3
+The results were revealing. Across all algorithms, the Home win odds (B365H) emerged as the single most important feature, though not overwhelmingly so 3:
+●	XGBoost: B365H = 51.5%
+●	LightGBM: B365H = 38.8% (relative importance)
+●	Random Forest: B365H = 38.9%
+This outcome was predetermined by the experimental design, which intentionally limited the feature space to test the efficiency of the odds themselves. The AI did not learn to predict football outcomes in isolation; instead, it learned to interpret the market, identifying subtle signals embedded in the bookmaker’s odds. The grand strategy was clear: the AI was playing the book, not the game.
+
+Discussion: Looking in the Mirror
+
+The investigation began as a search for a ghost in the machine. But it ends with a mirror. The AI's journey revealed something striking: the most powerful predictor in an efficient market is the market itself. This is a real-world demonstration of a core tenet of the Efficient Market Hypothesis: that prices—in this case, the odds—already reflect all available information so effectively that they cannot be used to generate a profit against the house.
+A crucial finding of this study is the convergence of the AI models. Although Random Forest finished with a slightly higher average bankroll, the performance differences between the three models were not statistically significant.3 The more profound insight is that three distinct algorithms—XGBoost, LightGBM, and Random Forest—all converged on a nearly identical, capital-preserving strategy. This suggests they independently discovered the same hard limit imposed by the market's efficiency, reinforcing the conclusion that there is no simple, exploitable pattern hidden within the odds themselves.
+If the market is so hard to beat, why do people keep playing? Here, the investigation moves from economics to psychology, asking a deeper question: are we rational actors, or are we storytellers looking for patterns in the noise?
+The Illusion of Control: Building and running a complex AI is a perfect example of what psychologist Ellen Langer called the "illusion of control". People tend to overestimate their ability to influence events that are actually random. Users become analysts, trying to outsmart the market. This involvement creates a strong sense of control, even though, mathematically, the game is designed to favor the house.
+Prospect Theory and the Comfort of a "Good Loss": The AI isn’t about making the most money—it’s about reducing swings in outcomes. This connects to Loss Aversion, a key idea in Prospect Theory, which says that the pain of losing is roughly twice as strong as the pleasure of winning the same amount. The AI appeals because it protects users from sudden, painful losses, making steady, smaller losses easier to accept. It provides the feeling of a carefully managed, "intelligent" loss.
+Gambler’s Fallacy: Expecting Patterns in Randomness: Humans naturally look for streaks or trends, believing that past results influence future outcomes. In crash games, a series of low multipliers may feel like a “high multiplier is due,” and in football betting, a team losing several matches may feel “due for a win.” The AI demonstrates that each round or match outcome is independent, showing how our brains create patterns where none exist.
+Confirmation Bias: Seeing Patterns That Aren’t There: People focus on small wins or coincidences that confirm their expectations while ignoring evidence to the contrary. Whether it’s catching a lucky crash multiplier or a successful bet on a favorite team, bettors often overinterpret randomness. The AI highlights that these patterns are mostly illusory, revealing the danger of relying on anecdotal evidence or short-term trends.
+Hyperreality: Are We Betting on the Game, or the Idea of the Game? Philosopher Jean Baudrillard argued that in today’s world, simulations can feel more real than reality itself. Sports betting exemplifies this: bettors rarely interact with the actual game—they engage with a simulation of it through odds, statistics, and predictive models. The AI discovered that success comes not from understanding the real game, but from mastering the hyperreal.
+This human desire to chase the ghost is a global phenomenon. In a country like Egypt, where gambling is legally prohibited for citizens, the demand remains immense.7 This powerful drive transcends law and culture, fueling a multi-billion dollar market in the Middle East and Africa where players often face even steeper odds with fewer protections.
+
+Limitations and Future Directions
+
+This study's conclusions are framed by its deliberate methodological choices, which also open avenues for future research.
+The primary limitation is one of scope, not methodology. The claim is not that the semi-strong form of the Efficient Market Hypothesis has been definitively proven, but rather that the profound informational efficiency of the odds has been demonstrated. By intentionally restricting the AI's feature space to only the bookmaker's odds, the experiment was designed to test whether this information alone could yield an edge. The finding that it cannot is a powerful, albeit specific, result. A more comprehensive test of the semi-strong EMH would require a different experimental design, one that provides the AI with both the odds and other public data (e.g., player statistics, injury news). Such a study would be a valuable next step.
+Furthermore, the analysis is confined to the English Premier League, a market known for its high efficiency. The conclusions may not generalize to other, potentially less mature, sports leagues where inefficiencies might still exist.
+
+Conclusion: The House's Final Secret
+
+Did our AI beat the house? No. But it revealed the house's final secret. The house doesn’t win by hiding information; it wins by being the best at calculating it and presenting it back to us as a price that feels fair. The AI did not crack the system’s code. Instead, it learned to read the subtle signals embedded in the market itself. Along the way, it uncovered a truth that has been hiding in plain sight all along: the odds are the ultimate expression of the house’s intelligence. Every strategy, every pattern, every calculation led back to the design of the system, revealing how the creators maintain their advantage. After following the AI through this long journey of discovery, one lesson becomes undeniable: the house always wins.
+
+Works Cited
+
+Angelini, G., & De Angelis, L. (2019). Efficiency of online football betting markets. International Journal of Forecasting, 35(2), 712-721. 8
+Angelini, G., De Angelis, L., & Singleton, C. (2022). Informational efficiency and behaviour within in-play prediction markets. International Journal of Forecasting, 38(1), 282-299.
+Barberis, N., & Huang, M. (2008). The loss aversion/narrow framing approach to the equity premium puzzle. In R. H. Thaler (Ed.), Advances in Behavioral Finance, Volume II (pp. 199–246). Princeton University Press. 10
+Benartzi, S., & Thaler, R. H. (1995). Myopic loss aversion and the equity premium puzzle. The Quarterly Journal of Economics, 110(1), 73–92. 12
+Cowley, E., Briley, D. A., & Farrell, C. (205). How do gamblers maintain an illusion of control? Journal of Business Research, 68(10), 2181-2188. 14
+Fama, E. F. (1970). Efficient capital markets: A review of theory and empirical work. The Journal of Finance, 25(2), 383–417. 16
+Friedman, M., & Savage, L. J. (1948). The utility analysis of choices involving risk. Journal of Political Economy, 56(4), 279–304. 18
+Goodie, A. S. (2005). The role of perceived control in the gambling of pathological and nonpathological gamblers. Journal of Gambling Studies, 21(3), 257–274. 20
+Grand View Research. (2024). Global Online Gambling Market Size & Outlook, 2024-2030. Accessed October 18, 2025. 1
+Griffith, R. M. (1949). Odds adjustments by American horse-race bettors. American Journal of Psychology, 62(2), 290–294. 22
+iGaming Express. (2025, September 26). Online Casinos in Egypt. Accessed October 18, 2025. 7
+Kahneman, D., & Tversky, A. (1979). Prospect theory: An analysis of decision under risk. Econometrica, 47(2), 263–291. 24
+Kahneman, D., & Tversky, A. (1992). Advances in prospect theory: Cumulative representation of uncertainty. Journal of Risk and Uncertainty, 5(4), 297–323.
+Ladouceur, R., et al. (1984). Illusion of control: A comparison between pathological and nonpathological gamblers. Journal of Social Behavior and Personality, 1(4), 499–504. 26
+Langer, E. J. (1975). The illusion of control. Journal of Personality and Social Psychology, 32(2), 311–328. 28
+Manski, C. F. (2006). Interpreting the predictions of prediction markets. Economics Letters, 91(3), 425–429. 30
+Matute, H., et al. (2011). The illusion of causality in the laboratory and in the real world. In B. H. Ross (Ed.), The Psychology of Learning and Motivation (Vol. 54, pp. 289–322). Academic Press. 32
+Na, J., et al. (2018). Black-and-white thinking: The relationship between dialectical thinking and the extremity of attitudes. Social Psychological and Personality Science, 9(5), 589–599. 34
+Newall, P. W. S., & Cortis, D. (2021). Are sports bettors biased toward longshots, favorites, or both? A literature review. Risks, 9(1), 22. 36
+Ottaviani, M., & Sørensen, P. N. (2008). The favorite-longshot bias: An overview of the main explanations. CEPR Discussion Paper No. 6967. 38
+Pankoff, L. D. (1968). Market efficiency and football betting. The Journal of Business, 41(2), 203–214. 40
+Snowberg, E., & Wolfers, J. (2010). Explaining the favorite-longshot bias: Is it risk-love or misperceptions? Journal of Political Economy, 118(4), 723–746. 41
+Sobel, R. S., & Raines, S. T. (2003). An examination of the empirical derivatives of the favourite-longshot bias in racetrack betting. Applied Economics, 35(4), 371–385. 42
+Thaler, R. H., & Ziemba, W. T. (1988). Parimutuel betting markets: Racetracks and lotteries. Journal of Economic Perspectives, 2(2), 161–174. 43
+Tversky, A., & Kahneman, D. (1981). The framing of decisions and the psychology of choice. Science, 211(4481), 453–458. 44
+Whelan, K. (2024). Risk aversion and favourite–longshot bias in a competitive fixed‐odds betting market. Economica, 91(361), 188–209. 45
+Works cited
+1.	Global Online Gambling Market Size & Outlook, 2024-2030, accessed October 19, 2025, https://www.grandviewresearch.com/horizon/outlook/online-gambling-market-size/global
+2.	Online Gambling Market Size, Trends | Industry Report, 2030 - Grand View Research, accessed October 19, 2025, https://www.grandviewresearch.com/industry-analysis/online-gambling-market
+3.	Favourite-longshot bias - Wikipedia, accessed October 19, 2025, https://en.wikipedia.org/wiki/Favourite-longshot_bias
+4.	Prospect theory - Wikipedia, accessed October 19, 2025, https://en.wikipedia.org/wiki/Prospect_theory
+5.	Prospect Theory in Psychology: Loss Aversion Bias, accessed October 19, 2025, https://www.simplypsychology.org/prospect-theory.html
+6.	Online Casinos in Egypt - iGaming Express, accessed October 19, 2025, https://igamingexpress.com/egypt-online-casino/
+7.	International Journal of Forecasting Efficiency of online football betting markets - Sci-Hub, accessed October 19, 2025, https://2024.sci-hub.se/7149/bf053b4c23d17f4ec286e33b682b8ece/angelini2019.pdf
+8.	Efficiency of online football betting markets - IDEAS/RePEc, accessed October 19, 2025, https://ideas.repec.org/a/eee/intfor/v35y2019i2p712-721.html
+9.	NBER WORKING PAPER SERIES THE LOSS AVERSION / NARROW FRAMING APPROACH TO THE EQUITY PREMIUM PUZZLE Nicholas Barberis Ming Huang, accessed October 19, 2025, https://www.nber.org/system/files/working_papers/w12378/w12378.pdf
+10.	The Loss Aversion/Narrow Framing Approach to the Equity Premium Puzzle - Nicholas Barberis, accessed October 19, 2025, https://nicholasbarberis.github.io/ep_v4.pdf
+11.	Benartzi, S., & Thaler, R. (1995). Myopic Loss-Aversion and the Equity Premium Puzzle. Quarterly Journal of Economics, 110, 73-92. - References - Scirp.org, accessed October 19, 2025, https://www.scirp.org/reference/referencespapers?referenceid=1946929
+12.	Myopic Loss Aversion and the Equity Premium Puzzle - IDEAS/RePEc, accessed October 19, 2025, https://ideas.repec.org/a/oup/qjecon/v110y1995i1p73-92..html
+13.	How do gamblers maintain an illusion of control? - IDEAS/RePEc, accessed October 19, 2025, https://ideas.repec.org/a/eee/jbrese/v68y2015i10p2181-2188.html
+14.	How do gamblers maintain an illusion of control? | Request PDF - ResearchGate, accessed October 19, 2025, https://www.researchgate.net/publication/276892771_How_do_gamblers_maintain_an_illusion_of_control
+15.	Fama, E. F., 1970. Efficient Capital Markets: A Review of Theory and Empirical Work. The Journal of Finance, 25(2), pp. 383-417. - Science and Education Publishing, accessed October 19, 2025, https://www.sciepub.com/reference/324394
+16.	Efficient Capital Markets: A Review of Theory and Empirical Work, accessed October 19, 2025, http://efinance.org.cn/cn/fm/Efficient%20Capital%20Markets%20A%20Review%20of%20Theory%20and%20Empirical%20Work.pdf
+17.	Friedman, M. and Savage, L.J. (1948) The Utility Analysis of Choices Involving Risk. Journal of Political Economy, 56, 279-304. - References - Scientific Research Publishing, accessed October 19, 2025, https://www.scirp.org/reference/referencespapers?referenceid=1917489
+18.	Friedman, M. and Savage, L.J. (1948) The Utility Analysis of Choices Involving Risk. The Journal of Political Economy, 56, 279-304. - References, accessed October 19, 2025, https://www.scirp.org/reference/referencespapers?referenceid=1440857
+19.	Perceptions among pathological and nonpathological gamblers - PubMed, accessed October 19, 2025, https://pubmed.ncbi.nlm.nih.gov/15050673/
+20.	Differences in Cognitive Distortions Between Pathological and Non-Pathological Gamblers with Preferences for Chance or Skill Games - ResearchGate, accessed October 19, 2025, https://www.researchgate.net/publication/41488100_Differences_in_Cognitive_Distortions_Between_Pathological_and_Non-Pathological_Gamblers_with_Preferences_for_Chance_or_Skill_Games
+21.	Odds Adjustments by American Horse-Race Bettors - Vilniaus universitetas, accessed October 19, 2025, https://virtualibiblioteka.vu.lt/discovery/fulldisplay?docid=cdi_proquest_miscellaneous_74652807&context=PC&vid=370LABT_VU:VU&lang=lt&adaptor=Primo%20Central&tab=LIBRARY_RESOURCES&query=sub%2Cequals%2CA%20posteriori%20knowledge%20%2CAND&mode=advanced&offset=0
+22.	Odds adjustments by American horse-race bettors - PubMed, accessed October 19, 2025, https://pubmed.ncbi.nlm.nih.gov/18144658/
+23.	ideas.repec.org, accessed October 19, 2025, https://ideas.repec.org/a/ecm/emetrp/v47y1979i2p263-91.html#:~:text=Suggested%20Citation,pages%20263%2D291%2C%20March.
+24.	Kahneman, D., & Tversky, A. (1979). Prospect theory An analysis of decision making under risk. Econometrica, 47, 263-291. - References - Scientific Research Publishing, accessed October 19, 2025, https://www.scirp.org/reference/referencespapers?referenceid=987257
+25.	Robert Ladouceur, Ph.D., accessed October 19, 2025, https://ucalgary.scholaris.ca/bitstreams/736b1c35-eeff-470e-9d5d-6f284ea09068/download
+26.	Differences in Cognitive Distortions Between Pathological and Non-Pathological Gamblers with Preferences for Chance or Skill Games - Lumsa, accessed October 19, 2025, https://lumsa.it/sites/default/files/pdf/MYRSETH_et_al_2010.pdf
+27.	Langer, E. J. (1975). The Illusion of Control. Journal of Personality and Social Psychology, 32, 311-328. - References - Scientific Research Publishing, accessed October 19, 2025, https://www.scirp.org/reference/referencespapers?referenceid=1790800
+28.	[PDF] The illusion of control. - Semantic Scholar, accessed October 19, 2025, https://www.semanticscholar.org/paper/The-illusion-of-control.-Langer/136e9cf6b5a4d17dbe8400fa5d7f4bf3ad01f6ac
+29.	Interpreting the predictions of prediction markets - IDEAS/RePEc, accessed October 19, 2025, https://ideas.repec.org/a/eee/ecolet/v91y2006i3p425-429.html
+30.	Interpreting the Predictions of Prediction Markets - ResearchGate, accessed October 19, 2025, https://www.researchgate.net/publication/4852350_Interpreting_the_Predictions_of_Prediction_Markets
+31.	This is the peer reviewed version of the following article: Matute, H., Yarritu, I., & Vadillo, M. A. (2011). Illusions of c - ADDI, accessed October 19, 2025, https://addi.ehu.es/bitstream/handle/10810/65834/Matute_et_al.%282011%29.pdf?sequence=1&isAllowed=y
+32.	‪Helena Matute‬ - ‪Google Scholar‬, accessed October 19, 2025, https://scholar.google.com/citations?user=hzI8H2EAAAAJ&hl=en
+33.	(PDF) Dialectical Thinking and Creativity from Many Perspectives: Contradiction and Tension - ResearchGate, accessed October 19, 2025, https://www.researchgate.net/publication/277179403_Dialectical_Thinking_and_Creativity_from_Many_Perspectives_Contradiction_and_Tension
+34.	White Dialectics: A New Framework for Theory, Research, and Practice With White Students - American Psychological Association, accessed October 19, 2025, https://www.apa.org/education/ce/white-dialectics.pdf
+35.	Are Sports Bettors Biased toward Longshots, Favorites, or Both? A Literature Review, accessed October 19, 2025, https://ideas.repec.org/a/gam/jrisks/v9y2021i1p22-d478780.html
+36.	Are sports bettors biased toward longshots, favorites, or both? A literature review - EconStor, accessed October 19, 2025, https://www.econstor.eu/handle/10419/258112
+37.	Noise, Information, and the Favorite-Longshot Bias in Parimutuel Predictions, accessed October 19, 2025, https://www.aeaweb.org/articles?id=10.1257/mic.2.1.58
+38.	Noise, Information and the Favorite-Longshot Bias∗ - IGIER, accessed October 19, 2025, https://igier.unibocconi.eu/sites/default/files/media/attach/131205.pdf
+39.	Market Efficiency and Football Betting - IDEAS/RePEc, accessed October 19, 2025, https://ideas.repec.org/a/ucp/jnlbus/v41y1968p203.html
+40.	Explaining the Favorite-Longshot Bias: Is it Risk-Love or Misperceptions?, accessed October 19, 2025, https://www.iza.org/publications/dp/4884/explaining-the-favorite-longshot-bias-is-it-risk-love-or-misperceptions
+41.	ideas.repec.org, accessed October 19, 2025, https://ideas.repec.org/a/taf/applec/v35y2003i4p371-385.html#:~:text=Suggested%20Citation,)%2C%20pages%20371%2D385.
+42.	Anomalies: Parimutuel Betting Markets: Racetracks and Lotteries, accessed October 19, 2025, https://www.aeaweb.org/articles?id=10.1257/jep.2.2.161
+43.	Tversky, A., & Kahneman, D. (1981). The Framing of Decisions and the Psychology of Choice. Science, 211, 453-458. - References - Scientific Research Publishing, accessed October 19, 2025, https://www.scirp.org/reference/referencespapers?referenceid=2656729
+44.	Estimating Preferences under Risk: The Case of Racetrack Bettors | Journal of Political Economy: Vol 108, No 3, accessed October 19, 2025, https://www.journals.uchicago.edu/doi/abs/10.1086/262127
